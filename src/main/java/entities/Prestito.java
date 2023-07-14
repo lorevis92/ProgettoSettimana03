@@ -44,4 +44,10 @@ public class Prestito {
 		this.restituzionePrevista = this.inizioPrestito.plusDays(30);
 	}
 
+	@Override
+	public String toString() {
+		return "Prestito [id=" + id + ", inizioPrestito=" + inizioPrestito + ", restituzionePrevista="
+				+ restituzionePrevista + ", restituzioneEffettiva=" + restituzioneEffettiva + "]";
+	}
+
 }

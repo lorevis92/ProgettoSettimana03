@@ -6,8 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import dao.CatalogoDao;
+import dao.LibroDAO;
 import dao.PersonaDAO;
 import dao.PrestitoDAO;
+import entities.Catalogo;
 import entities.Libro;
 import entities.Persona;
 import entities.Prestito;
@@ -22,6 +24,7 @@ public class App {
 
 		PersonaDAO persDao = new PersonaDAO(em);
 		CatalogoDao cDao = new CatalogoDao(em);
+		LibroDAO lDao = new LibroDAO(em);
 		PrestitoDAO prestDao = new PrestitoDAO(em);
 		System.out.println("Ciao");
 
@@ -54,6 +57,8 @@ public class App {
 		Prestito prestitoMara3 = new Prestito(vanityFairOttobre, mara);
 		Prestito prestitoMara4 = new Prestito(vanityFairNovembre, mara);
 		Prestito prestitoMara5 = new Prestito(vanityFairDicembre, mara);
+		Catalogo elementoTrovatoPerISBN;
+		Catalogo findByAnno;
 
 		// Salvataggio utenti sul Database
 //		persDao.savePersona(aldo);
@@ -62,7 +67,7 @@ public class App {
 //		persDao.savePersona(silvio);
 //		persDao.savePersona(andrea);
 
-		// Salvataggio elementi Catalogo
+		// Salvataggio elementi Catalogo (Richiesta 1 delle operazioni dell'archivio)
 //		cDao.saveCatalogo(doorsOfPerseption);
 //		cDao.saveCatalogo(cheapWhiskey);
 //		cDao.saveCatalogo(milleNovecentoOttantaQuattro);
@@ -82,6 +87,42 @@ public class App {
 //		prestDao.savePrestito(prestitoMara3);
 //		prestDao.savePrestito(prestitoMara4);
 //		prestDao.savePrestito(prestitoMara5);
+
+		// Rimozione di un elemento del catalogo dato un codice ISBN (Richiesta 2 delle
+		// operazioni dell'archivio)
+		cDao.findByIdAndDelete(19);
+
+		// Ricerca per ISBN di un elemento del catalogo (Richiesta 3 delle operazioni
+		// dell'archivio)
+		elementoTrovatoPerISBN = cDao.findById(1);
+		if (elementoTrovatoPerISBN != null)
+			System.out.println(elementoTrovatoPerISBN);
+		else
+			System.out.println("\nElemento non esistente nel catalogo \n -----------------------------------------\n");
+
+		// Ricerca Libro per anno di pubblicazione (Richiesta 4 delle operazioni
+		// dell'archivio)
+		System.out.println("\nRicerca elemento del catalogo per anno di pubblicazione \n");
+		cDao.findByAnnoPubblicazione(2022).forEach(d -> System.out.println(d));
+
+		// Ricerca per autore (Richiesta 5 delle operazioni dell'archivio)
+		System.out.println("\nRicerca Libro per autore \n");
+		lDao.findLibroByAutoreQuery("Lorenzo G. Visconti").forEach(l -> System.out.println(l));
+
+		// Ricerca per titolo o parte di esso (Richiesta 6 delle operazioni
+		// dell'archivio)
+		System.out.println("\nRicerca Libro per titolo \n");
+		cDao.findByTitolo("The d").forEach(l -> System.out.println(l));
+
+		// Ricerca degli elementi attualmente in prestito dato un numero di tessera
+		// utente --> Riuscito solo parzialmente. Non restituisco gli elementi in
+		// prestito, ma i prestiti che sono ancora aperti.
+		System.out.println("\nRicerca degli elementi attualmente in prestito dato un numero di tessera utente \n");
+		prestDao.findElementiInPrestitoPerUtenteQuery(33).forEach(d -> System.out.println(d));
+		;
+
+		// Ricerca di tutti i prestiti scaduti e non ancora restituiti (non eseguito
+		// perchè non mi è bastato il tempo per capire come farlo
 
 	}
 
