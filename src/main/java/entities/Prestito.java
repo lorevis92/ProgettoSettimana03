@@ -2,7 +2,9 @@ package entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,11 +24,11 @@ public class Prestito {
 	@GeneratedValue
 	long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "numero_tessera", referencedColumnName = "numerotessera", nullable = false)
 	Persona utente;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "codice_ISBN", referencedColumnName = "codiceisbn", nullable = false)
 	Catalogo elementoPrestato;
 
@@ -35,10 +37,11 @@ public class Prestito {
 	LocalDate restituzioneEffettiva;
 
 	// definizione constructor
-	public Prestito(Catalogo elementoPrestato, LocalDate inizioPrestito) {
+	public Prestito(Catalogo elementoPrestato, Persona persona) {
+		this.utente = persona;
 		this.elementoPrestato = elementoPrestato;
-		this.inizioPrestito = inizioPrestito;
-		this.restituzionePrevista = inizioPrestito.plusDays(30);
+		this.inizioPrestito = LocalDate.now();
+		this.restituzionePrevista = this.inizioPrestito.plusDays(30);
 	}
 
 }

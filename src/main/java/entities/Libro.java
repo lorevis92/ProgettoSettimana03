@@ -18,9 +18,9 @@ public class Libro extends Catalogo {
 	String genere;
 
 	// definizione costruttore
-	public Libro(long codiceISBN, String titolo, int annoPubblicazione, int numeroPagine, String autore,
+	public Libro(String titolo, int annoPubblicazione, int numeroPagine, String autore,
 			String genere) {
-		super(codiceISBN, titolo, annoPubblicazione, numeroPagine);
+		super(titolo, annoPubblicazione, numeroPagine);
 		this.autore = autore;
 		this.genere = genere;
 	}

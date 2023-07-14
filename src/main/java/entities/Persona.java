@@ -30,8 +30,7 @@ public class Persona {
 	Set<Prestito> elencoPrestitiUtente = new HashSet<>();
 
 	// definizione costruttore
-	public Persona(long numeroTessera, String nome, String cognome, LocalDate nascita) {
-		this.numeroTessera = numeroTessera;
+	public Persona(String nome, String cognome, LocalDate nascita) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataDiNascita = nascita;

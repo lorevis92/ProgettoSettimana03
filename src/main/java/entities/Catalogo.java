@@ -33,8 +33,7 @@ public abstract class Catalogo {
 	Set<Prestito> setPrestiti = new HashSet<>();
 
 	// definizione costruttore
-	public Catalogo(long codiceISBN, String titolo, int annoPubblicazione, int numeroPagine) {
-		this.codiceISBN = codiceISBN;
+	public Catalogo(String titolo, int annoPubblicazione, int numeroPagine) {
 		this.titolo = titolo;
 		this.annoPubblicazione = annoPubblicazione;
 		this.numeroPagine = numeroPagine;

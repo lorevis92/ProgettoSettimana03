@@ -2,6 +2,8 @@ package entities;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import enu.Periodicità;
 import lombok.Getter;
@@ -15,11 +17,12 @@ import lombok.Setter;
 @DiscriminatorValue("Rivista")
 public class Rivista extends Catalogo {
 	// definizione attributi
+	@Enumerated(EnumType.STRING)
 	Periodicità periodicità;
 
 	// definizione costruttore
-	public Rivista(long codiceISBN, String titolo, int annoPubblicazione, int numeroPagine, Periodicità periodicità) {
-		super(codiceISBN, titolo, annoPubblicazione, numeroPagine);
+	public Rivista(String titolo, int annoPubblicazione, int numeroPagine, Periodicità periodicità) {
+		super(titolo, annoPubblicazione, numeroPagine);
 		this.periodicità = periodicità;
 	}
 
